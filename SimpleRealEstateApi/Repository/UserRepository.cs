@@ -14,7 +14,8 @@ namespace SimpleRealEstateApi.Repository
 
         public bool CreateUser(User user)
         {
-            throw new NotImplementedException();
+            _context.Users.Add(user);
+            return Save();
         }
 
         public bool Save()
