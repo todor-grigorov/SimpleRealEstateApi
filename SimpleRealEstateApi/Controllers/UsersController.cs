@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SimpleRealEstateApi.Data;
+using SimpleRealEstateApi.Dto;
+using SimpleRealEstateApi.Interfaces;
 using SimpleRealEstateApi.Models;
 
 namespace SimpleRealEstateApi.Controllers
@@ -9,20 +12,38 @@ namespace SimpleRealEstateApi.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        ApiDbContext _dbContext = new ApiDbContext();
+        private readonly IUserRepository _userRepository;
+        private readonly IMapper _mapper;
+
+        public UsersController(IUserRepository userRepository, IMapper mapper)
+        {
+            _userRepository = userRepository;
+            _mapper = mapper;
+        }
 
         [HttpPost("[action]")]
-        public IActionResult Register([FromBody] User user)
+        [ProducesResponseType(201)]
+        [ProducesResponseType(400)]
+        public IActionResult Register([FromBody] UserDto userCreate)
         {
-            var userExists = _dbContext.Users.FirstOrDefault(u => u.Email == user.Email);
+            if (userCreate == null)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var userExists = _userRepository.UserExistsByEmail(userCreate.Email);
 
             if (userExists != null)
             {
-                return BadRequest("User with same email already exists");
+                ModelState.AddModelError("", "User with same email already exists!");
+                return StatusCode(422, ModelState);
             }
 
-            _dbContext.Users.Add(user);
-            _dbContext.SaveChanges();
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var userMap = _mapper.Map<User>(userCreate);
+            _userRepository.CreateUser(userMap);
 
             return StatusCode(StatusCodes.Status201Created);
         }
