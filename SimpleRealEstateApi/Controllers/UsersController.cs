@@ -11,10 +11,20 @@ namespace SimpleRealEstateApi.Controllers
     {
         ApiDbContext _dbContext = new ApiDbContext();
 
-        [HttpPost]
+        [HttpPost("[action]")]
         public IActionResult Register([FromBody] User user)
         {
+            var userExists = _dbContext.Users.FirstOrDefault(u => u.Email == user.Email);
 
+            if (userExists != null)
+            {
+                return BadRequest("User with same email already exists");
+            }
+
+            _dbContext.Users.Add(user);
+            _dbContext.SaveChanges();
+
+            return StatusCode(StatusCodes.Status201Created);
         }
     }
 }
