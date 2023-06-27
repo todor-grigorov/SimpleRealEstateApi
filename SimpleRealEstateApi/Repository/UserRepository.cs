@@ -17,16 +17,15 @@ namespace SimpleRealEstateApi.Repository
             throw new NotImplementedException();
         }
 
-        public User GetUser(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-
         public bool Save()
         {
             var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
+        }
+
+        public bool UserExistsByEmail(string email)
+        {
+            return _context.Users.Any(u => u.Email == email);
         }
 
         public bool UserExistsById(int id)
