@@ -6,7 +6,7 @@ namespace SimpleRealEstateApi.Interfaces
     {
         User GetUser(int id);
         bool CreateUser(User user);
-        bool UserExists(int id);
+        bool UserExistsById(int id);
         bool Save();
     }
 }
