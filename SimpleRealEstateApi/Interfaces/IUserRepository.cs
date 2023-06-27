@@ -4,8 +4,9 @@ namespace SimpleRealEstateApi.Interfaces
 {
     public interface IUserRepository
     {
-        User GetUser();
+        User GetUser(int id);
         bool CreateUser(User user);
+        bool UserExists(int id);
         bool Save();
     }
 }
