@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using SimpleRealEstateApi.Data;
 using SimpleRealEstateApi.Interfaces;
 using SimpleRealEstateApi.Repository;
 
@@ -11,6 +13,9 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<ApiDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
 
 var app = builder.Build();
 
