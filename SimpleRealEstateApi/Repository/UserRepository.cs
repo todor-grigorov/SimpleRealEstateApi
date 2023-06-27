@@ -24,9 +24,9 @@ namespace SimpleRealEstateApi.Repository
             return saved > 0 ? true : false;
         }
 
-        public bool UserExistsByEmail(string email)
+        public User? UserExistsByEmail(string email)
         {
-            return _context.Users.Any(u => u.Email == email);
+            return _context.Users.FirstOrDefault(u => u.Email == email);
         }
 
         public bool UserExistsById(int id)
