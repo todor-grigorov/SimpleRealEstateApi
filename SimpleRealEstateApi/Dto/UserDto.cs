@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿
+using SimpleRealEstateApi.Models;
 
 namespace SimpleRealEstateApi.Dto
 {
