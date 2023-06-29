@@ -31,7 +31,7 @@ namespace SimpleRealEstateApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var userExists = _userRepository.UserExistsByEmail(userCreate.Email);
+            var userExists = _userRepository.GetUser(userCreate.Email);
 
             if (userExists != null)
             {
