@@ -14,11 +14,13 @@ namespace SimpleRealEstateApi.Controllers
     {
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
+        private readonly IConfiguration _configuration;
 
-        public UsersController(IUserRepository userRepository, IMapper mapper)
+        public UsersController(IUserRepository userRepository, IMapper mapper, IConfiguration configuration)
         {
             _userRepository = userRepository;
             _mapper = mapper;
+            _configuration = configuration;
         }
 
         [HttpPost("[action]")]
@@ -46,6 +48,22 @@ namespace SimpleRealEstateApi.Controllers
             _userRepository.CreateUser(userMap);
 
             return StatusCode(StatusCodes.Status201Created);
+        }
+
+        [HttpPost("[action]")]
+        public IActionResult Login([FromBody] UserDto user)
+        {
+            if (user == null)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var currentUser = _userRepository.GetUserByEmailAndPassword(user.Email, user.Password);
+
+            if (currentUser != null)
+            {
+                return NotFound();
+            }
         }
     }
 }
