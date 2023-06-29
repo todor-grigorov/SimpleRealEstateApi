@@ -12,10 +12,26 @@ namespace SimpleRealEstateApi.Repository
             _context = context;
         }
 
+
+        public User? GetUser(string email)
+        {
+            return _context.Users.Where(u => u.Email == email).FirstOrDefault();
+        }
+
+        public User? GetUserByEmailAndPassword(string email, string password)
+        {
+            return _context.Users.Where(u => u.Email == email && u.Password == password).FirstOrDefault();
+        }
+
         public bool CreateUser(User user)
         {
             _context.Users.Add(user);
             return Save();
+        }
+
+        public bool UserExistsById(int id)
+        {
+            return _context.Users.Any(u => u.Id == id);
         }
 
         public bool Save()
@@ -24,14 +40,6 @@ namespace SimpleRealEstateApi.Repository
             return saved > 0 ? true : false;
         }
 
-        public User? GetUser(string email)
-        {
-            return _context.Users.FirstOrDefault(u => u.Email == email);
-        }
-
-        public bool UserExistsById(int id)
-        {
-            return _context.Users.Any(u => u.Id == id);
-        }
+        
     }
 }
