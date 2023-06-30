@@ -10,6 +10,7 @@ namespace SimpleRealEstateApi.Helper
         {
             CreateMap<User, UserDto>().ReverseMap();
             CreateMap<User, LoginUserDto>().ReverseMap();
+            CreateMap<Category, CategoryDto>().ReverseMap();
         }
     }
 }
