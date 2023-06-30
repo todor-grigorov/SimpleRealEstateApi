@@ -9,6 +9,7 @@ namespace SimpleRealEstateApi.Helper
         public MappingProfiles()
         {
             CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<User, LoginUserDto>().ReverseMap();
         }
     }
 }
