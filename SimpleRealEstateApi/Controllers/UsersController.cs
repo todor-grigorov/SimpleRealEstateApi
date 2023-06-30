@@ -55,6 +55,8 @@ namespace SimpleRealEstateApi.Controllers
         }
 
         [HttpPost("[action]")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
         public IActionResult Login([FromBody] UserDto user)
         {
             if (user == null)
@@ -64,7 +66,7 @@ namespace SimpleRealEstateApi.Controllers
 
             var currentUser = _userRepository.GetUserByEmailAndPassword(user.Email, user.Password);
 
-            if (currentUser != null)
+            if (currentUser == null)
             {
                 return NotFound();
             }
