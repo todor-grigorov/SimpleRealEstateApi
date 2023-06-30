@@ -57,7 +57,7 @@ namespace SimpleRealEstateApi.Controllers
         [HttpPost("[action]")]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public IActionResult Login([FromBody] UserDto user)
+        public IActionResult Login([FromBody] LoginUserDto user)
         {
             if (user == null)
             {
