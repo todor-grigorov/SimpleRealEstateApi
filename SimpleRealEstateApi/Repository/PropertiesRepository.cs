@@ -13,10 +13,6 @@ namespace SimpleRealEstateApi.Repository
             _context = context;
         }
 
-        public Property CreateProperty(Property property)
-        {
-            throw new NotImplementedException();
-        }
 
         public bool DeleteProperty(int id)
         {
@@ -48,9 +44,22 @@ namespace SimpleRealEstateApi.Repository
             throw new NotImplementedException();
         }
 
-        public Property UpdateProperty(Property property)
+        public bool Save()
+        {
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
+        }
+
+        public bool CreateProperty(Property property)
+        {
+            _context.Properties.Add(property);
+            return Save();
+        }
+
+        public bool UpdateProperty(Property property)
         {
             throw new NotImplementedException();
         }
+
     }
 }
