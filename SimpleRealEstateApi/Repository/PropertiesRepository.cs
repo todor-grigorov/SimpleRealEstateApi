@@ -21,7 +21,7 @@ namespace SimpleRealEstateApi.Repository
 
         public ICollection<Property> GetProperties()
         {
-            throw new NotImplementedException();
+            return _context.Properties.ToList();
         }
 
         public Property GetProperty(int id)
