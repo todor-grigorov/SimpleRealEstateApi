@@ -12,6 +12,7 @@ namespace SimpleRealEstateApi.Interfaces
         bool CreateProperty(int userId, Property property);
         bool UpdateProperty(Property property);
         bool DeleteProperty(int id);
+        bool PropertyExists(int id);
         bool Save();
     }
 }
