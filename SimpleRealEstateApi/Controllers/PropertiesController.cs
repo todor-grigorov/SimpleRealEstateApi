@@ -69,5 +69,46 @@ namespace SimpleRealEstateApi.Controllers
 
             return StatusCode(StatusCodes.Status201Created);
         }
+
+        [HttpPut("{propertyId}")]
+        [Authorize]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public IActionResult UpdateProperty(int propertyId, [FromBody] PropertyDto updateProperty)
+        {
+            if (updateProperty is null)
+                return BadRequest(ModelState);
+
+            if (propertyId != updateProperty.Id)
+                return BadRequest(ModelState);
+
+            if (!_propertiesRepository.PropertyExists(propertyId))
+                return NotFound();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var user = _userRepository.GetUser(userEmail);
+
+            if (user == null)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var propertyMap = _mapper.Map<Property>(updateProperty);
+
+            if (!_propertiesRepository.UpdateProperty(user.Id, propertyMap))
+            {
+                ModelState.AddModelError("", "Something went wrong updating property!");
+                return StatusCode(500, ModelState);
+            }
+
+            return Ok("Record updated successfully!");
+        }
     }
 }

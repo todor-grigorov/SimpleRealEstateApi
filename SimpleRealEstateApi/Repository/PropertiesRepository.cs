@@ -58,8 +58,9 @@ namespace SimpleRealEstateApi.Repository
             return Save();
         }
 
-        public bool UpdateProperty(Property property)
+        public bool UpdateProperty(int userId, Property property)
         {
+            property.UserId = userId;
             _context.Properties.Update(property);
             return Save();
         }
