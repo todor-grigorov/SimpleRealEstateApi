@@ -5,7 +5,7 @@ namespace SimpleRealEstateApi.Interfaces
     public interface IPropertiesRepository
     {
         ICollection<Property> GetProperties();
-        Property GetProperty(int id);
+        Property? GetProperty(int id);
         Property GetPropertyByCategory(int categoryId);
         ICollection<Property> GetTrendingProperties();
         ICollection<Property> GetSearchProperties(string address);

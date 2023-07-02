@@ -24,9 +24,9 @@ namespace SimpleRealEstateApi.Repository
             return _context.Properties.ToList();
         }
 
-        public Property GetProperty(int id)
+        public Property? GetProperty(int id)
         {
-            throw new NotImplementedException();
+            return _context.Properties.Where(p => p.Id == id).FirstOrDefault();
         }
 
         public Property GetPropertyByCategory(int categoryId)
