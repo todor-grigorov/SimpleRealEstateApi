@@ -9,7 +9,7 @@ namespace SimpleRealEstateApi.Interfaces
         Property GetPropertyByCategory(int categoryId);
         ICollection<Property> GetTrendingProperties();
         ICollection<Property> GetSearchProperties(string address);
-        bool CreateProperty(Property property);
+        bool CreateProperty(int userId, Property property);
         bool UpdateProperty(Property property);
         bool DeleteProperty(int id);
         bool Save();
