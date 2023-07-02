@@ -50,8 +50,10 @@ namespace SimpleRealEstateApi.Repository
             return saved > 0 ? true : false;
         }
 
-        public bool CreateProperty(Property property)
+        public bool CreateProperty(int userId, Property property)
         {
+            property.IsTrending = false;
+            property.UserId = userId;
             _context.Properties.Add(property);
             return Save();
         }
