@@ -64,5 +64,9 @@ namespace SimpleRealEstateApi.Repository
             return Save();
         }
 
+        public bool PropertyExists(int id)
+        {
+            return _context.Properties.Any(p => p.Id == id);
+        }
     }
 }
