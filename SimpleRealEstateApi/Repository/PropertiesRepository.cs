@@ -60,7 +60,8 @@ namespace SimpleRealEstateApi.Repository
 
         public bool UpdateProperty(Property property)
         {
-            throw new NotImplementedException();
+            _context.Properties.Update(property);
+            return Save();
         }
 
     }
