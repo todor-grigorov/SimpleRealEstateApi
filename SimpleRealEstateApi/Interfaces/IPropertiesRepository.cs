@@ -11,7 +11,7 @@ namespace SimpleRealEstateApi.Interfaces
         ICollection<Property> GetSearchProperties(string address);
         bool CreateProperty(int userId, Property property);
         bool UpdateProperty(int userId, Property property);
-        bool DeleteProperty(int id);
+        bool DeleteProperty(Property property);
         bool PropertyExists(int id);
         bool Save();
     }
