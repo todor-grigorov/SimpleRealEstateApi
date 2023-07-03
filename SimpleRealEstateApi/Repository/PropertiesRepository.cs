@@ -14,9 +14,10 @@ namespace SimpleRealEstateApi.Repository
         }
 
 
-        public bool DeleteProperty(int id)
+        public bool DeleteProperty(Property property)
         {
-            throw new NotImplementedException();
+            _context.Remove(property);
+            return Save();
         }
 
         public ICollection<Property> GetProperties()
