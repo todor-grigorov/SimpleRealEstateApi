@@ -6,7 +6,7 @@ namespace SimpleRealEstateApi.Interfaces
     {
         ICollection<Property> GetProperties();
         Property? GetProperty(int id);
-        Property GetPropertyByCategory(int categoryId);
+        ICollection<Property> GetPropertiesByCategory(int categoryId);
         ICollection<Property> GetTrendingProperties();
         ICollection<Property> GetSearchProperties(string address);
         bool CreateProperty(int userId, Property property);
