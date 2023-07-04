@@ -110,5 +110,45 @@ namespace SimpleRealEstateApi.Controllers
 
             return Ok("Record updated successfully!");
         }
+
+        [HttpDelete("{propertyId}")]
+        [Authorize]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult DeleteProperty(int propertyId)
+        {
+            if (!_propertiesRepository.PropertyExists(propertyId))
+            {
+                return NotFound();
+            }
+
+            var userEmail = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+            var user = _userRepository.GetUser(userEmail);
+
+            if (user == null)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+
+            var propertyToDelete = _propertiesRepository.GetProperty(propertyId);
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (propertyToDelete.UserId != user.Id)
+                return NotFound();
+
+            if (!_propertiesRepository.DeleteProperty(propertyToDelete))
+            {
+                ModelState.AddModelError("", "Something went wrong deleting property");
+            }
+
+            return Ok("Recodr deleted successfully");
+        }
     }
 }
