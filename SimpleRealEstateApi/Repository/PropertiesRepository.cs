@@ -30,9 +30,9 @@ namespace SimpleRealEstateApi.Repository
             return _context.Properties.Where(p => p.Id == id).FirstOrDefault();
         }
 
-        public Property GetPropertyByCategory(int categoryId)
+        public ICollection<Property> GetPropertiesByCategory(int categoryId)
         {
-            throw new NotImplementedException();
+            return _context.Properties.Where(p => p.CategoryId == categoryId).ToList();
         }
 
         public ICollection<Property> GetSearchProperties(string address)
