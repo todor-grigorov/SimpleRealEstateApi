@@ -13,6 +13,11 @@ namespace SimpleRealEstateApi.Repository
             _context = context;
         }
 
+        public bool CategoryExists(int id)
+        {
+            return _context.Categories.Any(c => c.Id == id);
+        }
+
         public ICollection<Category> GetCategories()
         {
             return _context.Categories.ToList();
