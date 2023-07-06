@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace SimpleRealEstateApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class PropertiesController : Controller
     {
