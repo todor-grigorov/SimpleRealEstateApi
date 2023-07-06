@@ -24,6 +24,7 @@ namespace SimpleRealEstateApi.Controllers
         }
 
         [HttpGet("{categoryId}")]
+        [Authorize]
         [ProducesResponseType(200, Type = typeof(IEnumerable<Property>))]
         public IActionResult GetPropertiesByCategory(int categoryId)
         {
