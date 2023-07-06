@@ -27,7 +27,7 @@ namespace SimpleRealEstateApi.Controllers
         [ProducesResponseType(200, Type = typeof(IEnumerable<Property>))]
         public IActionResult GetPropertiesByCategory(int categoryId)
         {
-            var propertiesResult = _mapper.Map<PropertyDto>(_propertiesRepository.GetPropertiesByCategory(categoryId));
+            var propertiesResult = _mapper.Map<ICollection<PropertyDto>>(_propertiesRepository.GetPropertiesByCategory(categoryId));
 
             if (propertiesResult == null)
             {
