@@ -14,15 +14,32 @@ namespace SimpleRealEstateApi.Controllers
     {
         private readonly IPropertiesRepository _propertiesRepository;
         private readonly IUserRepository _userRepository;
-        private readonly ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
 
-        public PropertiesController(IPropertiesRepository propertiesRepository, IUserRepository userRepository, ICategoryRepository categoryRepository, IMapper mapper)
+        public PropertiesController(IPropertiesRepository propertiesRepository, IUserRepository userRepository, IMapper mapper)
         {
             _propertiesRepository = propertiesRepository;
             _userRepository = userRepository;
-            _categoryRepository = categoryRepository;
             _mapper = mapper;
+        }
+
+        [HttpGet("{categoryId}")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<Property>))]
+        public IActionResult GetPropertiesByCategory(int categoryId)
+        {
+            var propertiesResult = _mapper.Map<PropertyDto>(_propertiesRepository.GetPropertiesByCategory(categoryId));
+
+            if (propertiesResult == null)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(propertiesResult);
         }
 
         [HttpPost]
@@ -151,15 +168,6 @@ namespace SimpleRealEstateApi.Controllers
             }
 
             return Ok("Recodr deleted successfully");
-        }
-
-        [HttpDelete("{propertyId}")]
-        [ProducesResponseType(400)]
-        [ProducesResponseType(204)]
-        [ProducesResponseType(404)]
-        public IActionResult Deleteproperty(int propertyId)
-        {
-            if (!_)
         }
     }
 }
