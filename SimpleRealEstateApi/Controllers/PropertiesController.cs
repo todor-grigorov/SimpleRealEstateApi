@@ -43,6 +43,26 @@ namespace SimpleRealEstateApi.Controllers
             return Ok(propertiesResult);
         }
 
+        [HttpGet("{propertyId}")]
+        [Authorize]
+        [ProducesResponseType(200, Type = typeof(Property))]
+        public IActionResult GetProperty(int propertyId)
+        {
+            var property = _mapper.Map<PropertyDto>(_propertiesRepository.GetProperty(propertyId));
+
+            if (property == null)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(property);
+        }
+
         [HttpPost]
         [Authorize]
         [ProducesResponseType(201)]
