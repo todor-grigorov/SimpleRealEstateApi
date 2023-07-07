@@ -42,7 +42,7 @@ namespace SimpleRealEstateApi.Repository
 
         public ICollection<Property> GetTrendingProperties()
         {
-            throw new NotImplementedException();
+            return _context.Properties.Where(p => p.IsTrending == true).ToList();
         }
 
         public bool Save()
