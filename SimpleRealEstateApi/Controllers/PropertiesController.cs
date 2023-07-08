@@ -84,7 +84,7 @@ namespace SimpleRealEstateApi.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult GetSearchProperties(string address)
+        public IActionResult GetSearchProperties([FromQuery] string address)
         {
             var properties = _mapper.Map<ICollection<PropertyDto>>(_propertiesRepository.GetSearchProperties(address));
 
