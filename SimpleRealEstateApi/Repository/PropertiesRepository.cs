@@ -37,7 +37,7 @@ namespace SimpleRealEstateApi.Repository
 
         public ICollection<Property> GetSearchProperties(string address)
         {
-            throw new NotImplementedException();
+            return _context.Properties.Where(p => p.Address.Contains(address)).ToList();
         }
 
         public ICollection<Property> GetTrendingProperties()
