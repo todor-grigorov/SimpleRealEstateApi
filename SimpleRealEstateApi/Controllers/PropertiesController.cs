@@ -67,11 +67,16 @@ namespace SimpleRealEstateApi.Controllers
         [Authorize]
         public IActionResult GetTrendingProperties()
         {
-            var properties = _mapper.Map<ICollection<PropertyDto>>(_propertiesRepository.GetTrendingProperties());
+            var properties = _mapper.Map<ICollection<Property>>(_propertiesRepository.GetTrendingProperties());
+
+            if (properties == null)
+            {
+                return NotFound();
+            }
 
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState);
+                return BadRequest();
             }
 
             return Ok(properties);
