@@ -82,6 +82,20 @@ namespace SimpleRealEstateApi.Controllers
             return Ok(properties);
         }
 
+        [HttpGet]
+        [Authorize]
+        public IActionResult GetSearchProperties(string address)
+        {
+            var properties = _mapper.Map<ICollection<PropertyDto>>(_propertiesRepository.GetSearchProperties(address));
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            return Ok(properties);
+        }
+
         [HttpPost]
         [Authorize]
         [ProducesResponseType(201)]
